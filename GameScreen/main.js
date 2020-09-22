@@ -1,32 +1,22 @@
-// setup canvas
-var canvas = document.querySelector('canvas');
-var ctx = canvas.getContext('2d');
+var canvas;
+var ctx;
+//  intialize the Canvas and context
 window.onload = init;
 
-function init() {
-	canvas
+function init(){
+  //get the canvas
+  canvas = document.getElementById('cnv');
+  canvas.style.border = 'solid black 2px';
+  canvas.style.backgroundColor = 'rgba(0,24,35)';
+  // get the context
+  ctx = canvas.getContext('2d'); // This is the context
+  animate();
 }
 
-function GameArea(){
-    	//  Wrapper Div
-    	this.wrapperDiv = document.getElementById("wrapperDiv");
-    	this.wrapperDiv.setAttribute("style", " background-color:yellow; border: 5px solid black; width:900px; height:800px;");
-    	// create tileMenuDiv
-    	this.tileMenuDiv = document.createElement("div");
-    	this.wrapperDiv.appendChild(this.tileMenuDiv);
-    	this.tileMenuDiv.setAttribute("style", " background-color:#00FF00; width:900px; height:100px;float:right;");
-	// create tileDivs
-	this.tileDiv1 = document.createElement("div");
-	this.tileMenuDiv.appendChild(this.tileDiv1);
-	this.tileDiv1.setAttribute("style", " background-color:#FF0000; width:90px; height:90px;float:right;");
-
-	this.tileDiv2 = document.createElement("div");
-	this.tileMenuDiv.appendChild(this.tileDiv2);
-	this.tileDiv2.setAttribute("style", " background-color:#FF0000; width:90px; height:90px;float:right;");
-
-	this.tileDiv3 = document.createElement("div");
-	this.tileMenuDiv.appendChild(this.tileDiv3);
-	this.tileDiv3.setAttribute("style", " background-color:#FF0000; width:90px; height:90px;float:right;");
+function animate(){
+  requestAnimationFrame(animate); //  We are calling the animate function from 
+//  inside of the animate function
+  ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
+  updateGame();
 }
-	
-gameArea();
+
