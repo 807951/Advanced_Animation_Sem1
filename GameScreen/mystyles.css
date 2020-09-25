@@ -2,7 +2,7 @@ body {
    background-color: #000000;
    margin:0;
  }
-#wrapper { // # is used for <div id...
+#wrapper { // # is used for div id
  height: 800px;
  width: 900px;
  margin:auto;

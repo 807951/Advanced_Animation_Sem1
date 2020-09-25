@@ -14,9 +14,6 @@ function init(){
 }
 
 function animate(){
-  requestAnimationFrame(animate); //  We are calling the animate function from 
-//  inside of the animate function
-  ctx.clearRect(0,0,window.innerWidth, window.innerHeight);
-  updateGame();
+  requestAnimationFrame(animate);
 }
 
