@@ -47,12 +47,12 @@ JSVector.prototype.sub = function(v2){
 
 // Class method to return a new vector that is the sum of two vectors
 JSVector.addGetNew = function(v1,v2){
-	return new Vector(this.x + v2.x, this.y + v2.y);
+	return new Vector(v1.x + v2.x, v1.y + v2.y);
 }
 
 // Class method to return a new vector that is the difference of two vectors
 JSVector.subGetNew = function(v1,v2){
-	return new Vector(this.x - v2.x, this.y - v2.y);
+	return new Vector(v1.x - v2.x, v1.y - v2.y);
 }
 
 // Multiply this vector by a scalar
@@ -69,25 +69,20 @@ JSVector.prototype.divide = function(scalar){
 
 // Normalize this vector so that it has a magnitude of 1
 JSVector.prototype.normalize = function(){
-	var len = Math.sqrt(vec.x * vec.x + vec.y * vec.y);
-	if (len) {
-	    vec.x /= len;
-	    vec.y /= len;
-	}
+	var magnitude = this.getMagnitude();
+	this.x /= magnitude;
+	this.y /= magnitude;
 }
 
 // Limit the magnitude of this vector
 JSVector.prototype.limit = function(lim){
-	var magnitude = this.getMagnitude();
-	if(magnitude > lim) {
-		vec.normalize();
-      	vec.multiply(lim);
-	}
+	this.normalize();
+    this.multiply(lim);
 }
 
 // Get the distance between this vector and another one
 JSVector.prototype.distance = function(v2){
-	return Math.sqrt(vec.x * vec.x + vec.y * vec.y);
+	return Math.sqrt(this.x * this.x + this.y * this.y);
 }
 
 // Get square of the distance between this vector and another one
@@ -100,17 +95,17 @@ JSVector.prototype.distanceSquared = function(v2){
 //                           |  sin   +cos  |
 
 JSVector.prototype.rotate = function(angle) {
-	var x = vec.x,
-	y = vec.y,
+	var x = this.x,
+	var y = this.y,
 	cosVal = Math.cos(angle),
 	sinVal = Math.sin(angle);
-	vec.x = x * cosVal - y * sinVal;
-	vec.y = x * sinVal + y * cosVal;
+	this.x = x * cosVal - y * sinVal;
+	this.y = x * sinVal + y * cosVal;
 }
 
 // Get the angle between this vector and another one
 JSVector.prototype.angleBetween = function(v2){
-	return(vec2.angle() - this.angle());
+	return(this.angle() - v2.angle());
 }
 
 // Make a copy of this vector
