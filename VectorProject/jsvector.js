@@ -24,8 +24,8 @@ JSVector.prototype.getMagnitude = function(){
 // retaining the magnitude.
 JSVector.prototype.setDirection = function(angle){
 	var magnitude = this.getMagnitude();
-	this.x = Math.cos(angle) * magnitude;
-	this.y = Math.sin(angle) * magnitude;
+	this.x = Math.cos(this.angle) * magnitude;
+	this.y = Math.sin(this.angle) * magnitude;
 }
 
 // Get the direction (angle) of the vector
@@ -47,12 +47,12 @@ JSVector.prototype.sub = function(v2){
 
 // Class method to return a new vector that is the sum of two vectors
 JSVector.addGetNew = function(v1,v2){
-	return new Vector(v1.x + v2.x, v1.y + v2.y);
+	return new JSVector(v1.x + v2.x, v1.y + v2.y);
 }
 
 // Class method to return a new vector that is the difference of two vectors
 JSVector.subGetNew = function(v1,v2){
-	return new Vector(v1.x - v2.x, v1.y - v2.y);
+	return new JSVector(v1.x - v2.x, v1.y - v2.y);
 }
 
 // Multiply this vector by a scalar
@@ -69,9 +69,7 @@ JSVector.prototype.divide = function(scalar){
 
 // Normalize this vector so that it has a magnitude of 1
 JSVector.prototype.normalize = function(){
-	var magnitude = this.getMagnitude();
-	this.x /= magnitude;
-	this.y /= magnitude;
+	this.setMagnitude(1);
 }
 
 // Limit the magnitude of this vector
@@ -82,12 +80,12 @@ JSVector.prototype.limit = function(lim){
 
 // Get the distance between this vector and another one
 JSVector.prototype.distance = function(v2){
-	return Math.sqrt(this.x * this.x + this.y * this.y);
+	return Math.sqrt((v2.x - this.x) * (v2.x - this.x) + (v2.y - this.y) * (v2.y - this.y));
 }
 
 // Get square of the distance between this vector and another one
 JSVector.prototype.distanceSquared = function(v2){
-	return vec.x * vec.x + vec.y * vec.y;
+	return (v2.x - this.x) * (v2.x - this.x) + (v2.y - this.y) * (v2.y - this.y);
 }
 
 // Rotate this vector by some number of radians
@@ -97,10 +95,8 @@ JSVector.prototype.distanceSquared = function(v2){
 JSVector.prototype.rotate = function(angle) {
 	var x = this.x,
 	var y = this.y,
-	cosVal = Math.cos(angle),
-	sinVal = Math.sin(angle);
-	this.x = x * cosVal - y * sinVal;
-	this.y = x * sinVal + y * cosVal;
+	this.x = x * Math.cos(angle) - y * Math.sin(angle);
+	this.y = x * Math.sin(angle) + y * Math.cos(angle);            
 }
 
 // Get the angle between this vector and another one

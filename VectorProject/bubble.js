@@ -4,7 +4,7 @@ function Bubble(x, y, dx, dy, rad, clr){
     this.y = y;
     this.dx = dx;
     this.dy = dy;
-    this.rad = rad;///2;
+    this.rad = rad;
     this.clr = clr;
     this.isOverlapping = false;
 }
