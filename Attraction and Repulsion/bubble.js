@@ -27,9 +27,12 @@ Bubble.prototype.checkOverlapping = function(){
             this.isOverlapping = true;
             this.clr =  "rgba(15,199,288,255)"
          }
+         if (d < 80) {
+          this.loc.add(this.vel);
+         }
+
        }
     }
-
   }
 
 // draw the bubble on the canvas
