@@ -10,7 +10,7 @@ function JSVector(x = 0,y = 0){
 // Set the magnitude of the vector,
 // retaining the angle (direction).
 JSVector.prototype.setMagnitude = function(mag){
-	var magnitude = this.getMagnitude();
+	let magnitude = this.getMagnitude();
 	this.x = Math.cos(angle) * magnitude;
 	this.y = Math.sin(angle) * magnitude;
 }
@@ -23,7 +23,7 @@ JSVector.prototype.getMagnitude = function(){
 // Set the angle (direction) of the vector,
 // retaining the magnitude.
 JSVector.prototype.setDirection = function(angle){
-	var magnitude = this.getMagnitude();
+	let magnitude = this.getMagnitude();
 	this.x = Math.cos(this.angle) * magnitude;
 	this.y = Math.sin(this.angle) * magnitude;
 }
@@ -74,7 +74,9 @@ JSVector.prototype.normalize = function(){
 
 // Limit the magnitude of this vector
 JSVector.prototype.limit = function(lim){
-	this.setMagnitude(lim);
+	if(this.getMagnitude() > lim) {
+		this.setMagnitude(lim);
+	}
 }
 
 // Get the distance between this vector and another one
@@ -92,8 +94,8 @@ JSVector.prototype.distanceSquared = function(v2){
 //                           |  sin   +cos  |
 
 JSVector.prototype.rotate = function(angle) {
-	var x = this.x;
-	var y = this.y;
+	let x = this.x;
+	let y = this.y;
 	this.x = x * Math.cos(angle) - y * Math.sin(angle);
 	this.y = x * Math.sin(angle) + y * Math.cos(angle);            
 }

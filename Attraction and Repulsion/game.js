@@ -10,20 +10,35 @@ function Game(){
     this.ctx = this.canvas.getContext('2d'); // This is the context
 
     //   create the array of bubble objects
-    this.bubbles = [];
-    let numBubbles = 50;
-    for(var i = 0; i < numBubbles; i++){
-        var x, y, dx, dy, diam, clr, r, g, b;
-        x = Math.random()*this.canvas.width;
-        y = Math.random()*this.canvas.height;
-        dx = Math.random()*6-3;
-        dy = Math.random()*6-3;
-        diam = 15;//Math.random()*20 + 10;
-        r = 255;
-        g = 255;
-        b = 255;
-        clr = "rgba(" + r + ", "+ g + ","+ b +")"
-        this.bubbles.push(new Bubble(x, y, dx, dy, diam, clr)); // add new bubble to array
+    this.movers = [];
+    let numMovers = 65;
+    for(var i = 0; i < numMovers; i++){
+        let x, y, dx, dy, diam, clr;
+        if(i == 0) { // attractor
+            x = Math.random()*this.canvas.width;
+            y = Math.random()*this.canvas.height;
+            dx = Math.random()* 6 - 3;
+            dy = Math.random()* 6 - 3;
+            diam = 12;
+            clr = "rgba(255,0,0)"
+            this.movers.push(new Mover(x, y, dx, dy, diam, clr, null, null)); // add new bubble to array
+        } else if (i == 1) { // repulsor
+            x = Math.random()*this.canvas.width;
+            y = Math.random()*this.canvas.height;
+            dx = Math.random()* 6 - 3;
+            dy = Math.random()* 6 - 3;
+            diam = 12;
+            clr = "rgba(0,255,0)"
+            this.movers.push(new Mover(x, y, dx, dy, diam, clr, null, null)); // add new bubble to array
+        } else { // normal bubbles
+            x = Math.random()*this.canvas.width;
+            y = Math.random()*this.canvas.height;
+            dx = Math.random()* 6 - 3;
+            dy = Math.random()* 6 - 3;
+            diam = 7;
+            clr = "rgba(0,0,255)"
+            this.movers.push(new Mover(x, y, dx, dy, diam, clr, this.movers[0], this.movers[1])); // add new bubble to array
+        }
     }
 
     //  Add event handlers to all tile objects
@@ -49,8 +64,8 @@ function Game(){
 // function to run the game each animation cycle
 Game.prototype.run = function(){
   if(!this.gamePaused){
-    for(let i = 0; i < this.bubbles.length; i++){
-      this.bubbles[i].run();    // run each bubble
+    for(let i = 0; i < this.movers.length; i++){
+      this.movers[i].run();    // run each bubble
    }
   }
 }
