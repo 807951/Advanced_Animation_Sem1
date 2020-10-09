@@ -38,33 +38,28 @@ Mover.prototype.update = function()
                 distanceA = this.loc.distance(this.attract.loc);
                 // distance from the current bubble to the repulsor
                 distanceR = this.loc.distance(this.repel.loc);
-                if(distanceA > distanceR) 
+                if(distanceA >= distanceR) 
                 {
-                    this.accel = JSVector.subGetNew(this.loc, this.attract.loc);
-                    this.accel.normalize();
-                    this.accel.multiply(0.05);
-                    this.accel.limit();
-                    this.vel.add(this.accel);
-                    this.vel.limit(3);
+                    this.vel.dx = Math.random()  * 4 - 4;
+                    this.vel.dy = Math.random() * 4 - 4;
                     this.loc.add(this.vel);
+                    console.log("1");
                 }
                 else 
                 {
-                    this.accel = JSVector.addGetNew(this.loc, this.attract.loc);
-                    this.accel.normalize();
-                    this.accel.multiply(0.05);
-                    this.accel.limit();
-                    this.vel.add(this.accel);
-                    this.vel.limit(3);
+                    this.vel.dx = Math.random()  * 4 - 4;
+                    this.vel.dy = Math.random() * 4 - 4;
                     this.loc.add(this.vel);
+                    console.log("2");
                 }
             }
             else 
             { 
-                // if the bubble is an attractor of repulsor
+                // if the bubble is not an attractor of repulsor
                 this.vel.dx = Math.random()  * 4 - 4;
                 this.vel.dy = Math.random() * 4 - 4;
                 this.loc.add(this.vel);
+                console.log("3");
             }
         }
     }
