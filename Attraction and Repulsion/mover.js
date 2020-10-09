@@ -55,7 +55,7 @@ Mover.prototype.update = function()
                     this.vel.add(this.accel);
                     this.vel.limit(5);
                     this.loc.sub(this.vel);
-                    console.log("1");
+                    //console.log("1");
                 }
             }
             else 
@@ -64,7 +64,7 @@ Mover.prototype.update = function()
                 this.vel.dx = Math.random()  * 4 - 4;
                 this.vel.dy = Math.random() * 4 - 4;
                 this.loc.add(this.vel);
-                console.log("3");
+                //console.log("3");
             }
         }
     }
