@@ -40,17 +40,22 @@ Mover.prototype.update = function()
                 distanceR = this.loc.distance(this.repel.loc);
                 if(distanceA >= distanceR) 
                 {
-                    this.vel.dx = Math.random()  * 4 - 4;
-                    this.vel.dy = Math.random() * 4 - 4;
+                    this.accel = JSVector.subGetNew(this.loc, this.attract.loc);
+                    this.accel.normalize();
+                    this.accel.multiply(0.5);
+                    this.vel.add(this.accel);
+                    this.vel.limit(5);
                     this.loc.add(this.vel);
-                    console.log("1");
                 }
-                else 
+                else if (distanceA < distanceR)
                 {
-                    this.vel.dx = Math.random()  * 4 - 4;
-                    this.vel.dy = Math.random() * 4 - 4;
-                    this.loc.add(this.vel);
-                    console.log("2");
+                    this.accel = JSVector.subGetNew(this.loc, this.repel.loc);
+                    this.accel.normalize();
+                    this.accel.multiply(0.9);
+                    this.vel.add(this.accel);
+                    this.vel.limit(5);
+                    this.loc.sub(this.vel);
+                    console.log("1");
                 }
             }
             else 

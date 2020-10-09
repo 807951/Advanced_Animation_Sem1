@@ -52,6 +52,7 @@ JSVector.addGetNew = function(v1,v2){
 
 // Class method to return a new vector that is the difference of two vectors
 JSVector.subGetNew = function(v1,v2){
+	console.log("entering sub get new");
 	return new JSVector(v1.x - v2.x, v1.y - v2.y);
 }
 
@@ -69,12 +70,20 @@ JSVector.prototype.divide = function(scalar){
 
 // Normalize this vector so that it has a magnitude of 1
 JSVector.prototype.normalize = function(){
-	this.setMagnitude(1);
+	 if (this.getMagnitude() != 0) {
+	   this.divide(this.getMagnitude());
+	 }
 }
 
 // Limit the magnitude of this vector
 JSVector.prototype.limit = function(lim){
-	this.setMagnitude(lim);
+	console.log("entering limit func");
+	let mag = this.getMagnitude();
+	if(lim > mag) {
+		console.log("entering limit func");
+		this.normalize();
+		this.multiply(lim/2);
+	}
 }
 
 // Get the distance between this vector and another one
@@ -95,7 +104,9 @@ JSVector.prototype.rotate = function(angle) {
 	var x = this.x;
 	var y = this.y;
 	this.x = x * Math.cos(angle) - y * Math.sin(angle);
-	this.y = x * Math.sin(angle) + y * Math.cos(angle);            
+	this.y = x * Math.sin(angle) + y * Math.cos(angle);  
+	console.log("inside rotate func");
+	console.log(this.vel.toString());          
 }
 
 // Get the angle between this vector and another one

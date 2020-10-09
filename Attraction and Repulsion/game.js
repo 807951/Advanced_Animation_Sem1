@@ -11,7 +11,7 @@ function Game(){
 
     //   create the array of bubble objects
     this.movers = [];
-    let numMovers = 65;
+    let numMovers = 20;
     for(var i = 0; i < numMovers; i++){
         let x, y, dx, dy, diam, clr;
         if(i == 0) { // attractor
