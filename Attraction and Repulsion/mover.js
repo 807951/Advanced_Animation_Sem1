@@ -40,7 +40,7 @@ Mover.prototype.update = function()
                 distanceR = this.loc.distance(this.repel.loc);
                 if(distanceA >= distanceR) 
                 {
-                    this.accel = JSVector.subGetNew(this.loc, this.attract.loc);
+                    this.accel = JSVector.subGetNew(this.attract.loc, this.loc);
                     this.accel.normalize();
                     this.accel.multiply(0.5);
                     this.vel.add(this.accel);
@@ -49,7 +49,7 @@ Mover.prototype.update = function()
                 }
                 else if (distanceA < distanceR)
                 {
-                    this.accel = JSVector.subGetNew(this.loc, this.repel.loc);
+                    this.accel = JSVector.subGetNew(this.repel.loc, this.loc);
                     this.accel.normalize();
                     this.accel.multiply(0.9);
                     this.vel.add(this.accel);
