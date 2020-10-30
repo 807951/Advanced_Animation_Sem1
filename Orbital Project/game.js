@@ -1,11 +1,9 @@
 function Game(){
-
     this.gamePaused = false;    
     this.ga = new GameArea();   
     this.canvas = document.getElementById('canvas');
     this.context = this.canvas.getContext('2d'); // This is the context
-    this.createMovers(this.canvas, 55);
-
+    this.createMovers(this.canvas, 55)
     for(let i = 0; i < this.ga.tiles.length; i++){
         this.ga.tiles[i].addEventListener('mouseover', // mouseover is the name of an event
                                         function(){//  JavaScript has anonymous functions
