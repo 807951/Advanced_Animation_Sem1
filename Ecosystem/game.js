@@ -10,67 +10,48 @@ function Game(){
     this.ctx = this.canvas.getContext('2d'); // This is the context
 
     this.movers = [];
-    this.createMovers(this.canvas, 1);
-
+    this.createMovers(this.canvas, 20);
+	
+	
+	this.ps1 = new ParticleSystem(this.canvas.width / 2, (this.canvas.height / 2) - 25, 1);
+    this.ps2 = new ParticleSystem(this.canvas.width / 2, (this.canvas.height / 2) + 25, 2);
+	
+	var x, y, dx, dy
+    x = Math.random() * this.canvas.width;
+    y = Math.random() * this.canvas.height;
+    dx = Math.random() * 6 - 3;
+    dy = Math.random() * 6 - 3;
+    this.snake = new Snake(15,x,y,dx,dy);
     //   create the array of bubble objects
-    this.stars = [];
-    let numStars = 10;
-    for(var i = 0; i < numStars; i++){
-        var x, y, dx, dy, clr, r, g, b;
-        x = Math.random()*this.canvas.width;
-        y = Math.random()*this.canvas.height;
-        dx = Math.random()*6-3;
-        dy = Math.random()*6-3;
-        r = 255;
-        g = 255;
-        b = 255;
-        clr = "rgba(" + r + ", "+ g + ","+ b +")"
-        this.stars.push(new Star(x, y, dx, dy, clr));
-    }
-
-    this.moons = [];
-    let numMoons = 1;
-    for(var i = 0; i < numMoons; i++){
-        var x, y, dx, dy, clr, r, g, b;
-        x = Math.random()*this.canvas.width;
-        y = Math.random()*this.canvas.height;
-        dx = Math.random()*6-3;
-        dy = Math.random()*6-3;
-        r = 255;
-        g = 255;
-        b = 255;
-        clr = "rgba(" + r + ", "+ g + ","+ b +")"
-        this.moons.push(new Moon(x, y, dx, dy, clr));
-      }
-
+	
 
 }
 
 // function to run the game each animation cycle
-Game.prototype.run = function(){
-  if(!this.gamePaused){
-    for(let i = 0; i < this.moons.length; i++){
-    this.moons[i].run();
-   }
-    for(let i = 0; i < this.stars.length; i++){
-      this.stars[i].run();
-    }
-    for(let i = 0; i < this.movers.length; i++){
-      this.movers[i].run();
-    }
+Game.prototype.run = function() {
+  if (!this.gamePaused) {
+    for(let i = 0; i < this.movers.length; i++) {
+      this.movers[i].run();    // run each bubble
+	}
+	this.snake.run();
+	this.ps1.run();
+    this.ps2.run();
   }
 }
 
 Game.prototype.createMovers = function(canvas, numMovers){
-  for(var i = 0; i<numMovers;i++){
-    var x, y, dx, dy, radius, clr, numOrbs;
-    radius = 15;
-    x = Math.random()*this.canvas.width;
-    y = Math.random()*this.canvas.height;
-    dx = Math.random()*2-1;
-    dy = Math.random()*2-1;
-    clr = "rgba(150, 150, 0)"
-    numOrbs = 20;
-    this.movers.push(new Mover(x, y, dx, dy, radius, clr, numOrbs));
-  }
+    this.movers = [];
+    for(var i = 0; i < numMovers; i++){
+        var x, y, dx, dy, diam, clr, r, g, b, numOrbs;
+        rad = 7;
+        x = Math.random() * canvas.width;
+        y = Math.random() * canvas.height;
+        dx = Math.random() * 2 - 1;
+        dy = Math.random() * 2 - 1;
+        r = Math.random() * 200 - 155;
+        g = Math.random() + 155;
+        b = Math.random() + 155;
+        clr = "rgba(" + r + ", "+ g + ","+ b +")"
+        this.movers.push(new Mover(x, y, dx, dy, diam, clr)); 
+    }
 }

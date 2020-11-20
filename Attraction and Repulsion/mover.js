@@ -1,6 +1,4 @@
-//  Mover constructor function +++++++++++++++++++++++++++++
 
-var randomColor = '#'+Math.floor(Math.random()*16777215).toString(16);
 function Mover(x, y, dx, dy, rad, clr){
   this.location = new JSVector(x, y);
   this.velocity = new JSVector(dx, dy);

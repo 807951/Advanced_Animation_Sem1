@@ -1,56 +1,65 @@
-function Mover(x, y, dx, dy, radius, clr, numOrbs){
+//  Mover constructor function +++++++++++++++++++++++++++++
+
+function Mover(x, y, dx, dy, rad, clr){
   this.location = new JSVector(x, y);
   this.velocity = new JSVector(dx, dy);
-  this.acceleration = new JSVector(0, 0);
-  this.radius = radius;
-  this.orbitAngle = Math.random()*Math.PI;
+  this.pulser= new JSVector(0, 0);
+  this.rad = rad;
   this.clr = clr;
-  this.orbiters = [];
-  this.orbitclr = "rgba(255, 0, 0)"
-
-   for(let i = 0; i<numOrbs; i++){
-     let a = i*(Math.PI*2)/numOrbs + this.orbitAngle;
-     let angleVel = numOrbs*0.01;
-     this.orbiters.push(new Orbiter(this, 1, 200, a, angleVel, this.orbitclr));
-   }
+  this.isOverlapping = false;
 }
 
+  //  placing methods in the prototype (every mover shares functions)
 Mover.prototype.run = function(){
     this.checkEdges();
     this.update();
     this.render();
-    for(let i=0; i<this.orbiters.length;i++){
-      let orb = this.orbiters[i];
-      orb.update();
-      orb.render();
-    }
+  }
 
-}
-
-
-// draw the bubble on the canvas
+// draw the mover on the canvas
 Mover.prototype.render = function(){
     let ctx = game.ctx;
     let b = game.movers;
-
-        ctx.strokeStyle = "rgba(150, 150, 150)";
-        ctx.fillStyle = this.clr;
+        if(this == b[0]){
+          ctx.strokeStyle = "rgba(0, 255, 0, 0)"
+          ctx.fillStyle = "rgba(0, 255, 0, 0)"
+        }
+        else{
+          ctx.strokeStyle = "rgba(255, 255, 255, 255)"
+          ctx.fillStyle = this.clr;
+        }
         ctx.beginPath();
-        ctx.arc(this.location.x,this.location.y, this.radius, Math.PI*2, 0, false);
+        ctx.arc(this.location.x,this.location.y, this.rad, Math.PI*2, 0, false);
         ctx.stroke();
         ctx.fill();
   }
 
-// Move the bubble in a random direction
+// Move the mover in a random direction
 Mover.prototype.update = function(){
+  let b=game.movers;
+  if(this !== b[0]){
+      let d = this.location.distance(b[0].location);
+    if(d<300){ //repeller
+          this.pulser = JSVector.subGetNew(this.location, b[0].location);
+          this.pulser.normalize();
+          this.pulser.multiply(0.08);
+    }
+    if(d>100){ //attractor
+        this.pulser = JSVector.subGetNew(b[0].location, this.location);
+        this.pulser.normalize();
+        this.pulser.multiply(0.08);
+    }
+  }
     if(!game.gamePaused){
-      this.velocity.add(this.acceleration);
-      this.velocity.limit(3);
-      this.location.add(this.velocity);
+      if(this !== b[0]){
+        this.velocity.add(this.pulser);
+        this.velocity.limit(3);
+        this.location.add(this.velocity);
+      }
     }
 }
 
-// When a bubble hits an edge of the canvas, it wraps around to the opposite edge.
+// When a mover hits an edge of the canvas, it wraps around to the opposite edge.
 Mover.prototype.checkEdges = function(){
     let canvas = game.canvas;
     if (this.location.x > canvas.width){
@@ -65,5 +74,4 @@ Mover.prototype.checkEdges = function(){
     else if(this.location.y < 0){
       this.location.y = canvas.height;
     }
-
   }

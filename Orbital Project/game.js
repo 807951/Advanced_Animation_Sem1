@@ -28,19 +28,3 @@ Game.prototype.run = function(){
   
 }
 
-Game.prototype.createMovers() = function(canvas, numMovers){
-    this.movers = [];
-    for(var i = 0; i < numMovers; i++){
-        var x, y, dx, dy, diam, clr, r, g, b, numOrbs;
-        rad = 7;
-        x = Math.random() * canvas.width;
-        y = Math.random() * canvas.height;
-        dx = Math.random() * 2 - 1;
-        dy = Math.random() * 2 - 1;
-        r = Math.random() * 200 - 155;
-        g = Math.random() + 155;
-        b = Math.random() + 155;
-        clr = "rgba(" + r + ", "+ g + ","+ b +")"
-        this.movers.push(new Bubble(x, y, dx, dy, diam, clr, numOrbs)); 
-    }
-}
