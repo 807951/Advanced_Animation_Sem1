@@ -1,7 +1,7 @@
 function Vehicle(location){
   this.location = new JSVector(location.x, location.y);
-  let dx = Math.random()*4 - 2;
-  let dy = Math.random()*4 - 2;
+  let dx = Math.random() * 4 - 2;
+  let dy = Math.random() * 4 - 2;
   this.velocity = new JSVector(dx, dy);
   this.acceleration = new JSVector(0,0);
   this.desiredSep = 10; 
@@ -118,9 +118,9 @@ Vehicle.prototype.align = function(vehicles){
   if(count>0){
     sum.divide(count);
     sum.normalize();
-    sum.multiply(game.slider2.value);//maxSpeed
+    sum.multiply(game.slider2.value);
     let steer = sum.sub(this.velocity);
-    steer.limit(game.slider1.value);//maxForce
+    steer.limit(game.slider1.value);
     return steer;
   }
   else{
