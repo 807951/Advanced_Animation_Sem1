@@ -1,25 +1,24 @@
-function ParticleSystem(x, y, direction){
+function ParticleSystem(x, y){
   this.particles = [];
-  this.direction = direction;
-  this.loc = new JSVector(x, y);
+  this.emit = new JSVector(x, y);
 }
 
-ParticleSystem.prototype.run = function(){
-  this.addParticle();
-  this.update(); 
+ParticleSystem.prototype.run = function(x, y){
+  this.update(x, y);
 }
 
 ParticleSystem.prototype.addParticle = function(){
-  let rad = 20;
-  let clr = "rbga(255, 255, 255)"
-  this.particles.push(new Particle(this.loc.x, this.loc.y, rad, clr, this.direction));
+  let rad = 2;
+  let particleClr = "rgba(34, 235, 232)";
+  this.particles.push(new Particle(this.emit.x, this.emit.y, rad, particleClr));
 }
 
-ParticleSystem.prototype.update = function(){
-  for(var i = this.particles.length - 1;i >= 0; i--){
+ParticleSystem.prototype.update = function(x, y){
+  for(let i = this.particles.length-1; i >= 0; i--){
     let p = this.particles[i];
+    this.emit = new JSVector(x, y);
     p.run();
-    if(p.isDead()){
+    if(p.isDead() == true){
       this.particles.splice(i, 1);
     }
   }

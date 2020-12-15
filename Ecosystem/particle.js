@@ -1,12 +1,13 @@
-function Particle(x, y, rad, clr, direction){
-  this.location = new JSVector(x, y);
-  this.velocity = new JSVector(Math.random()*2-1, Math.random()*2-1);
-  this.direction = direction;
-  this.uAccel = new JSVector(0, 0.1); // for the balls going up
-  this.dAccel = new JSVector(0, -0.1); // for the balls going down
-  this.lifespan = 60;
+function Particle(x, y, rad, clr){
+  this.loc = new JSVector(x, y);
+  this.vel = new JSVector(Math.random()*3-1, Math.random()*3-1);
+  this.lifeSpan = 500;
   this.radius = rad;
-  this.clr = clr;
+  r = Math.random()*255;
+  g = Math.random()*255;
+  b = Math.random()*255;
+  
+  this.clr = "rgba(" + r + ", "+ g + ","+ b +")";
 }
 
 Particle.prototype.run = function(){
@@ -14,32 +15,45 @@ Particle.prototype.run = function(){
   this.render();
 }
 
+Particle.prototype.update = function(){
+  this.loc.add(this.vel);
+
+  for(let i = 0; i < game.movers.length; i++){
+    for(let j = 0; j < game.movers[i].orbiters.length; j++){
+      let orb = game.movers[i].orbiters[j];
+      if(this.loc.distance(orb.location) < this.radius + orb.radius){
+        this.lifeSpan = -1;
+      }
+    }
+  }
+
+  for(let i = 0; i < game.movers.length; i++){
+      if(this.loc.distance(game.movers[i].location) < this.radius + game.movers[i].radius){
+		r = Math.random()*255;
+		g = Math.random()*255;
+		b = Math.random()*255;
+		game.movers[i].clr = "rgba(" + r + ", "+ g + ","+ b +")";
+      }
+    }
+  this.lifeSpan = this.lifeSpan-2;
+}
+
 Particle.prototype.render = function(){
   let ctx = game.ctx;
   ctx.strokeStyle = this.clr;
   ctx.fillStyle = this.clr;
+  ctx.save();
   ctx.beginPath();
-  ctx.arc(this.location.x, this.location.y, this.radius, Math.PI*2, 0, false);
+  ctx.arc(this.loc.x, this.loc.y, this.radius, Math.PI*2, 0, false);
   ctx.stroke();
   ctx.fill();
-}
-
-Particle.prototype.update = function(){
-  if(this.direction == 1) { // goes down
-    this.velocity.add(this.dAccel);
-    this.location.add(this.velocity);
-  } else { // goes up
-    this.velocity.add(this.uAccel);
-    this.location.add(this.velocity);
-  }
-  this.lifespan -= 1;
+  ctx.restore();
 }
 
 Particle.prototype.isDead = function(){
-  if(this.lifespan < 0){
+  if(this.lifeSpan < 0){
     return true;
-  }
-  else{
+  }else{
     return false;
   }
 }

@@ -1,61 +1,56 @@
-function Snake(numSegments, x, y, dx, dy) {
+function Snake(x, y, dx, dy, clr, numSegments){
+  this.snakeHead = new SnakeHead(x, y, dx, dy, 2, clr);
+  r = Math.random()*255;
+  g = Math.random()*255;
+  b = Math.random()*255;
+  this.clr = "rgba(" + r + ", "+ g + ","+ b +")"
   this.segments = [];
-  this.vel = new JSVector(dx, dy);
-  this.loc = new JSVector(x, y);
   this.numSegments = numSegments;
-  this.dist = 20;
-  let distance = 30;
-  for (let i = 0; i < this.numSegments; i++) {
-    this.segments[i] = new JSVector(x - distance, y - distance);
-    distance = distance - 20;
+  this.rad = 3;
+  let d = 40;
+  for(let i = 0; i < this.numSegments;i++){
+    this.segments[i] = new JSVector(x-d, y-d);
+    d = d-40;
   }
+  this.particleSystem = new ParticleSystem(this.snakeHead.location.x, this.snakeHead.location.y);
 }
 
-Snake.prototype.run = function() {
-  this.move();
+Snake.prototype.run = function(){
+  this.snakeHead.run();
+  this.particleSystem.run(this.snakeHead.location.x, this.snakeHead.location.y);
+  this.update();
   this.render();
-  this.checkEdges();
-  this.loc.add(this.vel);
-};
-Snake.prototype.move = function() {
-  for (let i=0; i < this.segments.length; i++) {
-    if (i===0) {
-      this.segments[i] = new JSVector(this.loc.x, this.loc.y);
-    }
-    if(i!==0){
-    var dist = JSVector.subGetNew(this.segments[i],this.segments[i-1]);
-    dist.setMagnitude(30);
-    this.segments[i]=JSVector.addGetNew(dist,this.segments[i-1]);
-  }
-}
 }
 
-Snake.prototype.render = function() {
+Snake.prototype.render = function(){
   let ctx = game.ctx;
-  for (let i = 0; i < this.segments.length; i++) {
-    ctx.lineWidth= 20-i;
-    ctx.lineCap = "round";
-    ctx.strokeStyle = "rgba(255,0,0,.5)" //this.clr;
+  for(var i = 0; i < this.numSegments; i++){
+    ctx.strokeStyle = this.clr;
     ctx.fillStyle = this.clr;
+    ctx.save();
     ctx.beginPath();
-    ctx.moveTo(this.segments[i].x,this.segments[i].y);
-    if(i!==0){
-    ctx.lineTo(this.segments[i-1].x,this.segments[i-1].y)
-  }
+    ctx.arc(this.segments[i].x, this.segments[i].y, this.rad, Math.PI*2, 0, false);
     ctx.stroke();
     ctx.fill();
+    ctx.restore();
   }
-  ctx.strokeStyle = "rgba(255,255,0)" //this.clr;
-  ctx.fillStyle = this.clr;
-  ctx.beginPath();
-  ctx.stroke();
-  ctx.fill();
 }
 
-Snake.prototype.checkEdges = function() {
-  let canvas = game.canvas;
-  if (this.loc.x + 10 > canvas.width) this.vel.x = -this.vel.x; // wrap around from right to left
-  if (this.loc.x - 10 < 0) this.vel.x = -this.vel.x; // wrap around from left to right
-  if (this.loc.y + 10 > canvas.height) this.vel.y = -this.vel.y; // wrap around from bottom to top
-  if (this.loc.y - 10 < 0) this.vel.y = -this.vel.y; // wrap around from top to bottom
+Snake.prototype.update = function(){
+  if(!game.gamePaused){
+    for(let i = 0; i<this.numSegments;i++){
+      if(i == 0){
+        this.segments[i] = new JSVector(this.snakeHead.location.x, this.snakeHead.location.y);
+      }
+      else{
+        let vB = JSVector.subGetNew(this.segments[i], this.segments[i-1]);
+        vB.setMagnitude(this.segments.length);
+        this.segments[i] = JSVector.addGetNew(this.segments[i-1], vB);
+      }
+    }
+  }
+}
+
+Snake.prototype.addParticle = function(){
+  this.particleSystem.addParticle();
 }
