@@ -35,11 +35,11 @@ Mover.prototype.run = function(){
 Mover.prototype.render = function(){
     let ctx = game.ctx;
     let b = game.movers;
-	r = Math.random()*255;
+	/* r = Math.random()*255;
   g = Math.random()*255;
   b = Math.random()*255;
   
-  this.clr = "rgba(" + r + ", "+ g + ","+ b +")";
+  this.clr = "rgba(" + r + ", "+ g + ","+ b +")"; */
         ctx.strokeStyle = this.clr;
         ctx.fillStyle = this.clr;
         ctx.beginPath();

@@ -1,7 +1,7 @@
 function Particle(x, y, rad, clr){
   this.loc = new JSVector(x, y);
   this.vel = new JSVector(Math.random()*3-1, Math.random()*3-1);
-  this.lifeSpan = 500;
+  this.lifeSpan = 250;
   this.radius = rad;
   r = Math.random()*255;
   g = Math.random()*255;

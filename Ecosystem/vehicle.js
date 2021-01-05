@@ -10,7 +10,7 @@ function Vehicle(loc){
   g = Math.random()*255;
   b = Math.random()*255;
   this.clr = "rgba(" + r + ", "+ g + ","+ b +")";
-  this.maxSpeed = 1;
+  this.maxSpeed = 5;
   this.maxForce = 1;
 }
 
@@ -76,7 +76,7 @@ Vehicle.prototype.flock = function(vehicles){
   let sep = this.separate(vehicles);
   let ali = this.align(vehicles);
   let coh = this.cohesion(vehicles);
-  let sepMult = 0.03;
+  let sepMult = 0.01;
   let aliMult = 0.03;
   let cohMult = 0.03;
   sep.multiply(sepMult);

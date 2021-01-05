@@ -7,7 +7,7 @@ function Game(){
     this.createMovers(this.canvas, 10);
 
     this.moons = [];
-    let numMoons = 20;
+    let numMoons = 50;
     for(var i = 0; i < numMoons; i++){
         var x, y, dx, dy, clr, r, g, b;
         x = Math.random()*(this.canvas.width - 40) + 20;
@@ -65,7 +65,7 @@ Game.prototype.createMovers = function(canvas, numMovers){
     g = Math.random()*155;
     b = Math.random()*155;
     clr = "rgba(" + r + ", " + g + "," + b +")"
-    numOrbs = 40;
+    numOrbs = 50;
     this.movers.push(new Mover(x, y, dx, dy, radius, clr, numOrbs));
   }
 }
