@@ -28,7 +28,7 @@ function Game(){
       }
 
       this.snakes = [];
-      this.createSnakes(this.canvas, 20);
+      this.createSnakes(this.canvas, 50);
 
       function createParticle(){
         for(let i = 0; i < game.snakes.length; i++){
