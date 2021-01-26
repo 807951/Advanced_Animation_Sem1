@@ -62,10 +62,10 @@ Vehicle.prototype.render = function(){
   ctx.translate(this.loc.x, this.loc.y);
   ctx.rotate(this.vel.getDirection());
   ctx.moveTo(-20, -20);
-        ctx.lineTo(20, -20);
-        ctx.lineTo(20, 20);
-        ctx.lineTo(-20, 20);
-        ctx.lineTo(-20, -20);
+  ctx.lineTo(20, -20);
+  ctx.lineTo(20, 20);
+  ctx.lineTo(-20, 20);
+  ctx.lineTo(-20, -20);
   ctx.stroke();
   ctx.fill();
   ctx.restore();
