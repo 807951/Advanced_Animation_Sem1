@@ -5,7 +5,7 @@ function Vehicle(loc){
   this.vel = new JSVector(dx, dy);
   this.acc = new JSVector(0, 0);
   this.desiredSep = 75;
-  this.neighborDist = 1;
+  this.neighborDist = 100;
   r = Math.random()*255;
   g = Math.random()*255;
   b = Math.random()*255;
@@ -47,8 +47,16 @@ Vehicle.prototype.checkEdges = function(){
 
 Vehicle.prototype.render = function(){
   let ctx = game.ctx;
+   /* r = Math.random()*200+55;
+  g = Math.random()*155;
+  b = Math.random()*155;
+  this.clr = "rgba(" + r + ", "+ g + ","+ b +")"; */
+  
   ctx.strokeStyle = this.clr;
+
+  
   ctx.fillStyle = this.clr;
+  
   ctx.save();
   ctx.beginPath();
   ctx.translate(this.loc.x, this.loc.y);

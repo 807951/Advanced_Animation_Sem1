@@ -19,7 +19,7 @@ Moon.prototype.run = function(){
     this.render();
   }
 Moon.prototype.render = function(){
-  let ctx = game.ctx;
+    let ctx = game.ctx;
   ctx.save();
   ctx.translate(this.location.x, this.location.y);
   ctx.rotate(this.velocity.getDirection() + Math.PI / 2); //offset 90 degrees
