@@ -65,18 +65,34 @@ Vehicle.prototype.render = function(){
 
 Vehicle.prototype.flock = function(vehicles){
   let flockForce =   new JSVector(0,0);
-  let sep = this.separate(vehicles);
-  let ali = this.align(vehicles);
-  let coh = this.cohesion(vehicles);
+  for(let i = 0; i < 3; i++){
+    if(i == 0){
+      let sep = this.separate(vehicles);
+    }
+    else if(i == 1){
+      let ali = this.align(vehicles);
+    }
+    else if(i === 2){
+      let coh = this.cohesion(vehicles);
+    }
+  }
   let sepMult = 0.01;
   let aliMult = 0.03;
   let cohMult = 0.03;
   sep.multiply(sepMult);
   ali.multiply(aliMult);
   coh.multiply(cohMult);
-  flockForce.add(sep);
-  flockForce.add(ali);
-  flockForce.add(coh);
+  for(let i = 0; i < 3; i++){
+    if(i == 0){
+      flockForce.add(sep);
+    }
+    else if(i == 1){
+      flockForce.add(ali);
+    }
+    else if(i === 2){
+      flockForce.add(coh);
+    }
+  }
   flockForce.limit(this.maxForce);
   this.acc.add(flockForce);
 }
